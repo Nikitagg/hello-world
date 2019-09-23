@@ -1,0 +1,27 @@
+version: 0.2
+
+
+env:
+  git-credential-helper: no
+proxy:
+    upload-artifacts: no
+    logs: no
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.7
+    commands:
+      -  pip install flake8 pytest pytest-cov
+      -  pip install moto 
+  build: 
+    commands:
+      - echo Build started on `date` 
+      - pytest -v --cov=test_s3
+      - flake8 --exit-zero --statistics  
+artifacts:
+  files:
+    - test_s3.py
+    - buildspec.yml
+    - secode.py
+ 
